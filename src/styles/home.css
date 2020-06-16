@@ -1,0 +1,12 @@
+h2 {
+    color: azure;
+}
+
+#country-selector{
+    background-color: #1F5373;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+    color: azure;
+}
