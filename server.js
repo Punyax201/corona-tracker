@@ -8,4 +8,3 @@ app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
 const port = process.env.port || 8080
 app.listen(port)
-console.log("Listening on Port..." + port)
