@@ -7,7 +7,16 @@
                 </div>
             </v-col>
         </v-row>
+
+        <h2>{{country}}</h2>
         <v-row>
+            <v-col>
+                <div id="lineGraph">
+
+                </div>
+            </v-col>
+        </v-row>
+        <v-row>           
             <v-col>
                 <Card type="white--text" title="Total" :data="dashboardData != undefined ? dashboardData.Confirmed : 0" />
             </v-col>
@@ -21,6 +30,7 @@
                 <Card type="red--text" title="Deaths" :data="dashboardData != undefined ? dashboardData.Deaths : 0" />
             </v-col>
         </v-row>
+        <v-icon color="white" @click="refreshButton">mdi-refresh</v-icon>
     </section>
 </template>
 <script>
@@ -40,16 +50,30 @@ export default {
     components:{
         Card
     },
-    props: ['dashboardData'],
+    props: ['dashboardData', 'country'],
 
     methods:{
         drawPieChart(){
-            d3Util.drawPieChart("#continentGraph", 400, 400, 150, 50, this.continentPieData)
+            var width = window.innerWidth
+            var height = window.innerHeight / 2
+            console.log("h: " + height + " w: " + width)
+            d3Util.drawPieChart("#continentGraph", width, height, height / 2, 50, this.continentPieData)
+        },
+
+        refreshButton(){
+            this.$store.dispatch('getDefaultDashboardData')
+            this.$store.commit('selectCountry', 'World')
+
+            var width = window.innerWidth
+            var height = window.innerHeight
+
+            d3Util.drawPieChart("#continentGraph", width, height / 2, 150, 50, this.continentPieData)
+
         }
     },
 
     computed: {
-        //getPieData: axiosUtil.sendRequest(URLS.LIVE_CONTINENT_DATA)
+       
     },
 
     async created(){
@@ -64,3 +88,23 @@ export default {
     }
 }
 </script>
+<style>
+svg{
+    width: 100%;
+}
+
+.graphLine{
+    fill: none;
+    transform: rotateZ(-45deg);
+    animation: graphLineAnim 1s forwards;
+}
+
+@keyframes graphLineAnim {
+    0%{
+
+    }
+    100%{
+        transform: rotateZ(0deg);
+    }
+}
+</style>

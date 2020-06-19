@@ -10,3 +10,14 @@ h2 {
     width: 100%;
     color: azure;
 }
+
+.list-item-name{
+    overflow-x: scroll;
+}
+
+@media only screen and (min-width: 768px){
+    .list-item-name::-webkit-scrollbar {
+        width: 0px;  /* Remove scrollbar space */
+        background: transparent;  /* Optional: just make scrollbar invisible */
+    }
+}
